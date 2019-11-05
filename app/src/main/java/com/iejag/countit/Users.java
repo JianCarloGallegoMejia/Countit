@@ -1,17 +1,17 @@
 package com.iejag.countit;
 
-public class User {
+public class Users {
     String uid;
     String nombre;
     String apellido;
     String usuario;
     String correo;
 
-    public User (){
+    public Users(){
 
     }
 
-    public User(String uid, String nombre, String apellido, String usuario, String correo) {
+    public Users(String uid, String nombre, String apellido, String usuario, String correo) {
         this.uid = uid;
         this.nombre = nombre;
         this.apellido = apellido;

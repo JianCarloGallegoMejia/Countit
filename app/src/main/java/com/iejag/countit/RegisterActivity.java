@@ -28,9 +28,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText contraseña;
     EditText confirmarcontraseña;
     EditText correo;
-    EditText celular;
     String TAG = "RegisterActivity";
     private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +75,17 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void createUserInFirebase() {
+     private void createUserInFirebase() {
         FirebaseUser user = mAuth.getCurrentUser();
-        User users = new User(
+        Users users = new Users(
                 user.getUid(), nombre.getText().toString(), apellido.getText().toString(), usuario.getText().toString(), correo.getText().toString());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("user");
+        DatabaseReference myRef = database.getReference("users");
         myRef.child(user.getUid()).setValue(users);
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+
 }
 

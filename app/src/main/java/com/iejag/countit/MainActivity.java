@@ -17,10 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    /*
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mAuth = FirebaseAuth.getInstance();
+        /*mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("rutas");
+
+         */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
