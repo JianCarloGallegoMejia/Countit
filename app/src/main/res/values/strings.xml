@@ -10,4 +10,8 @@
     <string name="confirmpassword">Confirmar contraseña</string>
     <string name="email">Correo</string>
     <string name="register">Registrarse</string>
+    <string name="descriptionhint">Descripción</string>
+    <string name="quantityhint">Cantidad</string>
+    <string name="pricehint">Precio</string>
+    <string name="save">Guardar</string>
 </resources>
