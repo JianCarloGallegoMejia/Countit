@@ -7,6 +7,7 @@ public class Users {
     String usuario;
     String correo;
 
+
     public Users(){
 
     }

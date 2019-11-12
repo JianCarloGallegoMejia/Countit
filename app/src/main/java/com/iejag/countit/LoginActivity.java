@@ -64,8 +64,15 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+        email.setText("");
+        password.setText("");
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Se debe cerrar sesión", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
 
     private void firebaselogin() {
         if (email.length() < 1 || password.length() < 1) {

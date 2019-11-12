@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class AddActivity extends AppCompatActivity {
+public class EditProductActivity extends AppCompatActivity {
 
-    private Product product;
     private TextView tvName;
     private TextView tvPrice;
     private EditText etName;
@@ -22,35 +20,52 @@ public class AddActivity extends AppCompatActivity {
     private Button btnConfirm;
     private Realm realm;
 
+    private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_edit);
         realm = Realm.getDefaultInstance();
-        tvName = findViewById(R.id.tv_nombre);
-        tvPrice = findViewById(R.id.tv_price);
+        loadViews();
+        id = getIntent().getStringExtra("productId");
+        loadProduct(id);
+    }
+
+    private void loadProduct(String id) {
+        Product product = realm.where(Product.class).equalTo("id", id).findFirst();
+        if (product != null) {
+            etName.setText(product.getName());
+            etPrice.setText(product.getPrice());
+        }
+    }
+
+    private void loadViews() {
         etName = findViewById(R.id.edtName);
         etPrice = findViewById(R.id.edtPrice);
-        etDescription = findViewById(R.id.edtDescription);
-        etQuantity = findViewById(R.id.edtQuantity);
         btnConfirm = findViewById(R.id.btn_save);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmUser();
+                updateProduct();
             }
         });
-
     }
 
-    private void confirmUser() {
-        Toast.makeText(this, "Producto confirmado", Toast.LENGTH_SHORT).show();
-        addUserInDB(product);
+    private void updateProduct() {
+        String name = etName.getText().toString();
+        String description = etDescription.getText().toString();
+        String quantity = etQuantity.getText().toString();
+        String price = etPrice.getText().toString();
+        Product product = new Product (id,  name, description,  quantity, price);
+        updateProductInDB(product);
+        finish();
     }
 
-    private void addUserInDB(Product product) {
+    private void updateProductInDB(Product product) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(product);
         realm.commitTransaction();
     }
 }
+
