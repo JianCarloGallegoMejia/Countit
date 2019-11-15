@@ -77,22 +77,24 @@ public class AddActivity extends AppCompatActivity {
                 if (isSuccess){
                     String id = UUID.randomUUID().toString();
                     Product product = new Product(id, name, price, description,quantity);
-                    openMainActivity(product);
-                    confirmProduct();
+                    confirmProduct(product);
+                    finish();
                 }
             }
         });
     }
 
-    private void openMainActivity(Product product) {
+   /* private void openMainActivity(Product product) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("product", product);
-//        startActivity(intent);
+      startActivity(intent);
         startActivityForResult(intent, 100);
     }
 
+    */
 
-    private void confirmProduct() {
+
+    private void confirmProduct(Product product) {
         Toast.makeText(this, "Producto confirmado", Toast.LENGTH_SHORT).show();
         addProductInDB(product);
     }

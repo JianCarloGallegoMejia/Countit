@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toolbar;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,6 +14,7 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
 
     int SPLASH_SCREEN_TIME = 2000;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

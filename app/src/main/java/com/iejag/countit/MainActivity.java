@@ -17,9 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProductsAdapter.UsersAdapterListener{
+public class MainActivity extends AppCompatActivity implements ProductsAdapter.ProductsAdapterListener {
 
     private RecyclerView recyclerView;
     private Realm realm;
@@ -59,6 +60,17 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateProducts();
+    }
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Se debe cerrar sesión", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
     private void loadProducts() {
         List<Product> products = getProducts();
 
@@ -74,6 +86,21 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
     }
 
 
+    /*private void loadRecyclerView() {
+        List<String> items = new ArrayList<>();
+        items.add("Item 1");
+        items.add("Item 2");
+        items.add("Item 3");
+        items.add("Item 4");
+
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerAdapter adapter = new RecyclerAdapter(this, items);
+        recyclerView.setAdapter(adapter);
+    }
+*/
 
 
     @Override
@@ -90,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
         if (id == R.id.action_settings) {
             FirebaseAuth.getInstance().signOut();
             finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
             return true;
         }

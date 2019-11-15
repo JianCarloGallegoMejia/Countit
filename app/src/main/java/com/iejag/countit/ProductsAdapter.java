@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemViewHolder> {
     private Context context;
     private List<Product> items;
-    private UsersAdapterListener listener;
+    private ProductsAdapterListener listener;
 
-    public ProductsAdapter(Context context, List<Product> items, UsersAdapterListener listener) {
+    public ProductsAdapter(Context context, List<Product> items, ProductsAdapterListener listener) {
         this.context = context;
         this.items = items;
         this.listener = listener;
@@ -76,7 +76,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
             edit = itemView.findViewById(R.id.iv_edit);
         }
     }
-    public interface UsersAdapterListener{
+    public interface ProductsAdapterListener {
 
         void deleteUser(String id);
 
