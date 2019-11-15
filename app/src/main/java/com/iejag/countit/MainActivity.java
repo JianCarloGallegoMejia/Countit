@@ -15,6 +15,8 @@ import io.realm.Realm;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     private RecyclerView recyclerView;
     private Realm realm;
     private ProductsAdapter productsAdapter;
+    private ImageView car;
+    private TextView emptycar;
+    private TextView total;
+    final int TOTAL = 0;
     /*
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -41,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.recycler_view);
         realm = Realm.getDefaultInstance();
+        car = findViewById(R.id.iv_car);
+        emptycar = findViewById(R.id.tv_emptycar);
+        total = findViewById(R.id.tv_total);
+        total.setText("$"+TOTAL);
+
+
+
+
         loadProducts();
         /*mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -64,6 +78,16 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     protected void onRestart() {
         super.onRestart();
         updateProducts();
+        List<Product> products = getProducts();
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
+
     }
     @Override
     public void onBackPressed() {
@@ -72,7 +96,17 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     }
 
     private void loadProducts() {
+
         List<Product> products = getProducts();
+
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -136,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         realm.commitTransaction();
 
         updateProducts();
+        List<Product> products = getProducts();
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
 
     }
 

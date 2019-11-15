@@ -14,7 +14,6 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
 
     int SPLASH_SCREEN_TIME = 2000;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

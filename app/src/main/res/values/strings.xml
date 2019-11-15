@@ -15,4 +15,6 @@
     <string name="pricehint">Precio</string>
     <string name="save">Guardar</string>
     <string name="required">Requerido</string>
+    <string name="total">Total de la compra</string>
+    <string name="emptybuy">No has agregado nada al carrito</string>
 </resources>

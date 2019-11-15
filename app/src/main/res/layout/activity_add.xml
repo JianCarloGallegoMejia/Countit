@@ -6,17 +6,18 @@
     tools:context=".AddActivity"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
 
     <com.google.android.material.textfield.TextInputLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:background="@color/linearBackground">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtName"
@@ -30,9 +31,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="@color/linearBackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtDescription"
@@ -46,9 +46,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="@color/linearBackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtQuantity"
@@ -56,15 +55,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/quantityhint"
                 android:textSize="20dp"
-                android:inputType="text"/>
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="@color/linearBackground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPrice"
@@ -72,20 +70,20 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/pricehint"
                 android:textSize="20dp"
-                android:inputType="text"/>
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:id="@+id/btn_save"
-            android:text="@string/save">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/save"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white">
+
         </Button>
     </LinearLayout>
 
