@@ -15,15 +15,22 @@ import io.realm.Realm;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProductsAdapter.UsersAdapterListener{
+public class MainActivity extends AppCompatActivity implements ProductsAdapter.ProductsAdapterListener {
 
     private RecyclerView recyclerView;
     private Realm realm;
     private ProductsAdapter productsAdapter;
+    private ImageView car;
+    private TextView emptycar;
+    private TextView total;
+    final int TOTAL = 0;
     /*
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -40,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.recycler_view);
         realm = Realm.getDefaultInstance();
+        car = findViewById(R.id.iv_car);
+        emptycar = findViewById(R.id.tv_emptycar);
+        total = findViewById(R.id.tv_total);
+        total.setText("$"+TOTAL);
+
+
+
+
         loadProducts();
         /*mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -59,8 +74,39 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
 
     }
 
-    private void loadProducts() {
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateProducts();
         List<Product> products = getProducts();
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Se debe cerrar sesión", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
+    private void loadProducts() {
+
+        List<Product> products = getProducts();
+
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -74,6 +120,21 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
     }
 
 
+    /*private void loadRecyclerView() {
+        List<String> items = new ArrayList<>();
+        items.add("Item 1");
+        items.add("Item 2");
+        items.add("Item 3");
+        items.add("Item 4");
+
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerAdapter adapter = new RecyclerAdapter(this, items);
+        recyclerView.setAdapter(adapter);
+    }
+*/
 
 
     @Override
@@ -90,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
         if (id == R.id.action_settings) {
             FirebaseAuth.getInstance().signOut();
             finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -107,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.U
         realm.commitTransaction();
 
         updateProducts();
+        List<Product> products = getProducts();
+        if (products.isEmpty()){
+            car.setVisibility(View.VISIBLE);
+            emptycar.setVisibility(View.VISIBLE);
+        }
+        if (!products.isEmpty()){
+            car.setVisibility(View.GONE);
+            emptycar.setVisibility(View.GONE);
+        }
 
     }
 

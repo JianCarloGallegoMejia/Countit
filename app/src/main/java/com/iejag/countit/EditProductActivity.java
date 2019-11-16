@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 public class EditProductActivity extends AppCompatActivity {
 
-    private TextView tvName;
-    private TextView tvPrice;
+
     private EditText etName;
     private EditText etPrice;
     private EditText etDescription;
@@ -37,12 +36,16 @@ public class EditProductActivity extends AppCompatActivity {
         if (product != null) {
             etName.setText(product.getName());
             etPrice.setText(product.getPrice());
+            etDescription.setText(product.getDescription());
+            etQuantity.setText(product.getQuantity());
         }
     }
 
     private void loadViews() {
         etName = findViewById(R.id.edtName);
         etPrice = findViewById(R.id.edtPrice);
+        etDescription = findViewById(R.id.edtDescription);
+        etQuantity = findViewById(R.id.edtQuantity);
         btnConfirm = findViewById(R.id.btn_save);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
