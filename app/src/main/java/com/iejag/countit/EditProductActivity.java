@@ -56,13 +56,38 @@ public class EditProductActivity extends AppCompatActivity {
     }
 
     private void updateProduct() {
+
         String name = etName.getText().toString();
         String description = etDescription.getText().toString();
         String quantity = etQuantity.getText().toString();
         String price = etPrice.getText().toString();
-        Product product = new Product (id,  name, description,  quantity, price);
-        updateProductInDB(product);
-        finish();
+        boolean isSuccess = true;
+
+        if (name.isEmpty()) {
+            etName.setError(getString(R.string.required));
+            isSuccess = false;
+        }
+        if (price.isEmpty()) {
+            etPrice.setError(getString(R.string.required));
+            isSuccess = false;
+        }
+        if (description.isEmpty()) {
+            etDescription.setError(getString(R.string.required));
+            isSuccess = false;
+        }
+        if (quantity.isEmpty()) {
+            etQuantity.setError(getString(R.string.required));
+            isSuccess = false;
+        }
+        if (isSuccess) {
+            int iPrice = Integer.parseInt(price);
+            int iQuantity = Integer.parseInt(quantity);
+            int semitotal = iPrice * iQuantity;
+            String total = String.valueOf(semitotal);
+            Product product = new Product(id, name, description, quantity, price, total);
+            updateProductInDB(product);
+            finish();
+        }
     }
 
     private void updateProductInDB(Product product) {

@@ -35,7 +35,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
     public void onBindViewHolder(@NonNull ProductsAdapter.ItemViewHolder holder, int position) {
         final Product product= items.get(position);
         holder.tvName.setText(product.getName());
-        holder.tvPrice.setText(product.getPrice());
+        holder.tvPrice.setText(product.getQuantity()+" X "+product.getPrice()+" = "+product.getTotal());
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

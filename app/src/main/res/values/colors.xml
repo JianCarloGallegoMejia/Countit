@@ -6,4 +6,5 @@
     <color name="linearBackground">#DDDDDD</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="backgroundSplash">#75F8E2</color>
 </resources>

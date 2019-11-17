@@ -19,14 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_total"
-            android:textSize="60dp"
+            android:textSize="70dp"
             android:layout_gravity="center"
             android:textColor="@color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/total"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:layout_gravity="center" />
     </LinearLayout>
 

@@ -76,7 +76,13 @@ public class AddActivity extends AppCompatActivity {
                 }
                 if (isSuccess){
                     String id = UUID.randomUUID().toString();
-                    Product product = new Product(id, name, price, description,quantity);
+                    price = etPrice.getText().toString();
+                    int iPrice = Integer.parseInt(price);
+                     quantity = etQuantity.getText().toString();
+                    int iQuantity = Integer.parseInt(quantity);
+                    int semitotal = iPrice * iQuantity;
+                    String total = String.valueOf(semitotal);
+                    Product product = new Product(id, name,description,quantity,price,total);
                     confirmProduct(product);
                     operation();
                     finish();
@@ -86,11 +92,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void operation() {
-        String price = etPrice.getText().toString();
-        int iPrice = Integer.parseInt(price);
-        String quantity = etQuantity.getText().toString();
-        int iQuantity = Integer.parseInt(quantity);
-        int semitotal = iPrice * iQuantity;
+
     }
 
    /* private void openMainActivity(Product product) {

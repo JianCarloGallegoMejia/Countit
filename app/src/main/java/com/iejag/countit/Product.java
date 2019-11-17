@@ -13,6 +13,15 @@ public class Product extends RealmObject implements Serializable {
     String description;
     String quantity;
     String price;
+    String total;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
 
     public Product(){
 
@@ -24,6 +33,15 @@ public class Product extends RealmObject implements Serializable {
         this.description = description;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public Product(String id, String name, String description, String quantity, String price, String total) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.total = total;
     }
 
     public String getId() {

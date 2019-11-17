@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     private ImageView car;
     private TextView emptycar;
     private TextView total;
-    final int TOTAL = 0;
+    private int totalcompra=0;
     /*
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -50,12 +50,9 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         car = findViewById(R.id.iv_car);
         emptycar = findViewById(R.id.tv_emptycar);
         total = findViewById(R.id.tv_total);
-        total.setText("$"+TOTAL);
-
-
-
-
         loadProducts();
+        totalBuy();
+        total.setText("$"+totalcompra);
         /*mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
@@ -71,6 +68,16 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
                 startActivity(intent);
             }
         });
+
+    }
+
+    private void totalBuy() {
+        List<Product> products = getProducts();
+        Product product = new Product();
+
+
+
+
 
     }
 
