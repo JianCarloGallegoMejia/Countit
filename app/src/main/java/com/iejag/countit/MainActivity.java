@@ -15,6 +15,7 @@ import io.realm.Realm;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,14 +31,7 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     private ImageView car;
     private TextView emptycar;
     private TextView total;
-    private int totalcompra=0;
-    /*
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
 
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +44,9 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         car = findViewById(R.id.iv_car);
         emptycar = findViewById(R.id.tv_emptycar);
         total = findViewById(R.id.tv_total);
-        loadProducts();
-        totalBuy();
-        total.setText("$"+totalcompra);
-        /*mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("rutas");
 
-         */
+        loadProducts();
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,31 +59,23 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
 
     }
 
-    private void totalBuy() {
-        List<Product> products = getProducts();
-        Product product = new Product();
-
-
-
-
-
-    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         updateProducts();
         List<Product> products = getProducts();
-        if (products.isEmpty()){
+        if (products.isEmpty()) {
             car.setVisibility(View.VISIBLE);
             emptycar.setVisibility(View.VISIBLE);
         }
-        if (!products.isEmpty()){
+        if (!products.isEmpty()) {
             car.setVisibility(View.GONE);
             emptycar.setVisibility(View.GONE);
         }
 
     }
+
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Se debe cerrar sesión", Toast.LENGTH_SHORT).show();
@@ -106,11 +86,11 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
 
         List<Product> products = getProducts();
 
-        if (products.isEmpty()){
+        if (products.isEmpty()) {
             car.setVisibility(View.VISIBLE);
             emptycar.setVisibility(View.VISIBLE);
         }
-        if (!products.isEmpty()){
+        if (!products.isEmpty()) {
             car.setVisibility(View.GONE);
             emptycar.setVisibility(View.GONE);
         }
@@ -118,30 +98,27 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        productsAdapter = new ProductsAdapter(this, products,this);
+        productsAdapter = new ProductsAdapter(this, products, this);
         recyclerView.setAdapter(productsAdapter);
     }
+
     private List<Product> getProducts() {
         List<Product> products = realm.where(Product.class).findAll();
+        float acum = 0;
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            if (product != null) {
+                String cantidad = product.getQuantity();
+                String precio = product.getPrice();
+                int iCantidad = Integer.parseInt(cantidad);
+                int iPrecio = Integer.parseInt(precio);
+                acum = acum + (iCantidad * iPrecio);
+            }
+        }
+
+        total.setText("$" + acum);
         return products;
     }
-
-
-    /*private void loadRecyclerView() {
-        List<String> items = new ArrayList<>();
-        items.add("Item 1");
-        items.add("Item 2");
-        items.add("Item 3");
-        items.add("Item 4");
-
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        RecyclerAdapter adapter = new RecyclerAdapter(this, items);
-        recyclerView.setAdapter(adapter);
-    }
-*/
 
 
     @Override
@@ -178,11 +155,11 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
 
         updateProducts();
         List<Product> products = getProducts();
-        if (products.isEmpty()){
+        if (products.isEmpty()) {
             car.setVisibility(View.VISIBLE);
             emptycar.setVisibility(View.VISIBLE);
         }
-        if (!products.isEmpty()){
+        if (!products.isEmpty()) {
             car.setVisibility(View.GONE);
             emptycar.setVisibility(View.GONE);
         }
@@ -196,11 +173,10 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         startActivity(intent);
 
     }
+
     private void updateProducts() {
         productsAdapter.updateProducts(getProducts());
     }
-
-
 
 
 }
