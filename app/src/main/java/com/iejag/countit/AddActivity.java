@@ -1,6 +1,7 @@
 package com.iejag.countit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import io.realm.Realm;
 
 import android.content.Intent;
@@ -30,6 +31,8 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         realm = Realm.getDefaultInstance();
+        getSupportActionBar().setTitle("Agregar producto");
+        getSupportActionBar().setIcon(R.drawable.ic_keyboard_backspace_black_24dp);
         loadViews();
       //  product = (Product) getIntent().getSerializableExtra("product");
       //  loadProduct();

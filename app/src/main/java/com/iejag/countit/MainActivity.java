@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     private ImageView car;
     private TextView emptycar;
     private TextView total;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.recycler_view);
         realm = Realm.getDefaultInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         car = findViewById(R.id.iv_car);
         emptycar = findViewById(R.id.tv_emptycar);
         total = findViewById(R.id.tv_total);
@@ -63,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     @Override
     protected void onRestart() {
         super.onRestart();
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
         updateProducts();
         List<Product> products = getProducts();
         if (products.isEmpty()) {
