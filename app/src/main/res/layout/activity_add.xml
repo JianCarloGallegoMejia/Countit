@@ -24,8 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
+            android:maxLength="30"
             android:textSize="20dp"
-            android:inputType="text"/>
+            android:inputType="textPhonetic"/>
     </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/descriptionhint"
                 android:textSize="20dp"
-                android:inputType="text"/>
+                android:inputType="textPhonetic"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

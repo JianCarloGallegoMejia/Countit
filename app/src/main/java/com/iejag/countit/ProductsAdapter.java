@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
     private Context context;
     private List<Product> items;
     private ProductsAdapterListener listener;
+    DecimalFormat formateador = new DecimalFormat("###,###.##");
 
     public ProductsAdapter(Context context, List<Product> items, ProductsAdapterListener listener) {
         this.context = context;
@@ -35,7 +37,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
     public void onBindViewHolder(@NonNull ProductsAdapter.ItemViewHolder holder, int position) {
         final Product product= items.get(position);
         holder.tvName.setText(product.getName());
-        holder.tvPrice.setText(product.getQuantity()+" X "+product.getPrice()+" = "+product.getTotal());
+        holder.tvPrice.setText(product.getQuantity()+" X "+product.getPrice()+" = "+ String.format(product.getTotal()));
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

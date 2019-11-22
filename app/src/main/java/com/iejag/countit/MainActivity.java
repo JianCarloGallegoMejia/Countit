@@ -1,5 +1,6 @@
 package com.iejag.countit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.buy_list);
         recyclerView = findViewById(R.id.recycler_view);
         realm = Realm.getDefaultInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -112,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
 
     private List<Product> getProducts() {
         List<Product> products = realm.where(Product.class).findAll();
-        float acum = 0;
+        DecimalFormat formateador = new DecimalFormat("###,###.##");
+        int acum = 0;
         for (int i = 0; i < products.size(); i++) {
             Product product = products.get(i);
             if (product != null) {
@@ -124,7 +129,8 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
             }
         }
 
-        total.setText("$" + acum);
+
+        total.setText("$" + formateador.format(acum));
         return products;
     }
 
@@ -153,24 +159,40 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     }
 
     @Override
-    public void deleteUser(String id) {
+    public void deleteUser(final String id) {
         realm.beginTransaction();
-        Product product = realm.where(Product.class).equalTo("id", id).findFirst();
-        if (product != null) {
-            product.deleteFromRealm();
-        }
-        realm.commitTransaction();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.alert_dialog);
+        builder.setMessage(R.string.alert_message);
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Product product = realm.where(Product.class).equalTo("id", id).findFirst();
+                if (product != null) {
+                    product.deleteFromRealm();
+                }
+                realm.commitTransaction();
 
-        updateProducts();
-        List<Product> products = getProducts();
-        if (products.isEmpty()) {
-            car.setVisibility(View.VISIBLE);
-            emptycar.setVisibility(View.VISIBLE);
-        }
-        if (!products.isEmpty()) {
-            car.setVisibility(View.GONE);
-            emptycar.setVisibility(View.GONE);
-        }
+                updateProducts();
+                List<Product> products = getProducts();
+                if (products.isEmpty()) {
+                    car.setVisibility(View.VISIBLE);
+                    emptycar.setVisibility(View.VISIBLE);
+                }
+                if (!products.isEmpty()) {
+                    car.setVisibility(View.GONE);
+                    emptycar.setVisibility(View.GONE);
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
 
     }
 

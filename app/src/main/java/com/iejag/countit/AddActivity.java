@@ -2,6 +2,7 @@ package com.iejag.countit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import io.realm.Realm;
 
 import android.content.Intent;
@@ -34,14 +35,9 @@ public class AddActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Agregar producto");
         getSupportActionBar().setIcon(R.drawable.ic_keyboard_backspace_black_24dp);
         loadViews();
-      //  product = (Product) getIntent().getSerializableExtra("product");
-      //  loadProduct();
     }
 
-    /*private void loadProduct() {
-        tvName.setText(product.getName());
-        tvPrice.setText(product.getPrice());
-    }*/
+
 
     private void loadViews() {
         tvName = findViewById(R.id.tv_nombre);
@@ -77,35 +73,21 @@ public class AddActivity extends AppCompatActivity {
                     etQuantity.setError(getString(R.string.required));
                     isSuccess = false;
                 }
-                if (isSuccess){
+                if (isSuccess) {
                     String id = UUID.randomUUID().toString();
                     price = etPrice.getText().toString();
                     int iPrice = Integer.parseInt(price);
-                     quantity = etQuantity.getText().toString();
+                    quantity = etQuantity.getText().toString();
                     int iQuantity = Integer.parseInt(quantity);
                     int semitotal = iPrice * iQuantity;
                     String total = String.valueOf(semitotal);
-                    Product product = new Product(id, name,description,quantity,price,total);
+                    Product product = new Product(id, name, description, quantity, price, total);
                     confirmProduct(product);
-                    operation();
                     finish();
                 }
             }
         });
     }
-
-    private void operation() {
-
-    }
-
-   /* private void openMainActivity(Product product) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("product", product);
-      startActivity(intent);
-        startActivityForResult(intent, 100);
-    }
-
-    */
 
 
     private void confirmProduct(Product product) {

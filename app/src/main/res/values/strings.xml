@@ -17,4 +17,9 @@
     <string name="required">Requerido</string>
     <string name="total">Total de la compra</string>
     <string name="emptybuy">No has agregado nada al carrito</string>
+    <string name="alert_dialog">Eliminar producto</string>
+    <string name="buy_list">Lista de compras</string>
+    <string name="alert_message">¿Desea eliminar este producto?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
 </resources>
