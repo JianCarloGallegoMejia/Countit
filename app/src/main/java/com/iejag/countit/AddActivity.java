@@ -1,5 +1,6 @@
 package com.iejag.countit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -7,6 +8,7 @@ import io.realm.Realm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,12 +34,23 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         realm = Realm.getDefaultInstance();
-        getSupportActionBar().setTitle("Agregar producto");
-        getSupportActionBar().setIcon(R.drawable.ic_keyboard_backspace_black_24dp);
+        loadToolbar();
         loadViews();
     }
 
+    private void loadToolbar() {
+        getSupportActionBar().setTitle(R.string.add_product);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void loadViews() {
         tvName = findViewById(R.id.tv_nombre);

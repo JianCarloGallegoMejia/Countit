@@ -10,11 +10,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.realm.Realm;
 
+import android.print.PageRange;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,7 +140,38 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String filter) {
+             if (filter.isEmpty()||filter.length()==0){
+                 getProducts();
+                 List<Product> productsFiltered = realm.where(Product.class).findAll();
+
+                 productsAdapter.setProducts(productsFiltered);
+             }else{
+                 List<Product> productsFiltered = realm.where(Product.class)
+                         .beginGroup()
+                         .contains("name",filter)
+                         .endGroup()
+                         .findAll();
+
+                 productsAdapter.setProducts(productsFiltered);
+             }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -159,15 +193,15 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
     }
 
     @Override
-    public void deleteUser(final String id) {
-        realm.beginTransaction();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    public void deleteProduct(final String id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle(R.string.alert_dialog);
         builder.setMessage(R.string.alert_message);
         builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                realm.beginTransaction();
                 Product product = realm.where(Product.class).equalTo("id", id).findFirst();
                 if (product != null) {
                     product.deleteFromRealm();
@@ -193,11 +227,11 @@ public class MainActivity extends AppCompatActivity implements ProductsAdapter.P
             }
         });
 
-
+        builder.create().show();
     }
 
     @Override
-    public void editUser(String id) {
+    public void editProduct(String id) {
         Intent intent = new Intent(this, EditProductActivity.class);
         intent.putExtra("productId", id);
         startActivity(intent);

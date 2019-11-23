@@ -27,14 +27,6 @@ public class Product extends RealmObject implements Serializable {
 
     }
 
-    public Product(String id, String name, String description, String quantity, String price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.price = price;
-    }
-
     public Product(String id, String name, String description, String quantity, String price, String total) {
         this.id = id;
         this.name = name;

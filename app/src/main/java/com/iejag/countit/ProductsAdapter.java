@@ -4,20 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemViewHolder> {
+import io.realm.Realm;
+
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemViewHolder>  {
     private Context context;
     private List<Product> items;
     private ProductsAdapterListener listener;
-    DecimalFormat formateador = new DecimalFormat("###,###.##");
 
     public ProductsAdapter(Context context, List<Product> items, ProductsAdapterListener listener) {
         this.context = context;
@@ -41,14 +44,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.editUser(product.getId());
+                listener.editProduct(product.getId());
 
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.deleteUser(product.getId());
+                listener.deleteProduct(product.getId());
             }
         });
     }
@@ -58,8 +61,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
         return items.size();
     }
 
+
     public void updateProducts(List<Product> products) {
         this.items = products;
+        notifyDataSetChanged();
+    }
+
+    public void setProducts(List<Product> productsFiltered) {
+        this.items = productsFiltered;
         notifyDataSetChanged();
     }
 
@@ -80,9 +89,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ItemVi
     }
     public interface ProductsAdapterListener {
 
-        void deleteUser(String id);
+        void deleteProduct(String id);
 
-        void editUser(String id);
+        void editProduct(String id);
     }
 
 }

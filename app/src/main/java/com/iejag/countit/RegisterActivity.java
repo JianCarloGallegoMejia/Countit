@@ -21,10 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button registrarse;
-    EditText nombre;
-    EditText apellido;
-    EditText usuario;
+    Button btnRegistrarse;
+    EditText etNombre;
+    EditText etApellido;
+    EditText etUsuario;
     EditText contraseña;
     EditText confirmarcontraseña;
     EditText correo;
@@ -37,14 +37,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        nombre = findViewById(R.id.etname);
-        apellido = findViewById(R.id.etlastname);
-        usuario = findViewById(R.id.etuser);
+        etNombre = findViewById(R.id.etname);
+        etApellido = findViewById(R.id.etlastname);
+        etUsuario = findViewById(R.id.etuser);
         contraseña = findViewById(R.id.etpassword);
         confirmarcontraseña = findViewById(R.id.etconfirmpassword);
         correo = findViewById(R.id.etemail);
-        registrarse = findViewById(R.id.btnregistrarse);
-        registrarse.setOnClickListener(new View.OnClickListener() {
+        btnRegistrarse = findViewById(R.id.btnregistrarse);
+        btnRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebasecreateuser();
@@ -58,19 +58,14 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             createUserInFirebase();
 
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
@@ -78,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
      private void createUserInFirebase() {
         FirebaseUser user = mAuth.getCurrentUser();
         Users users = new Users(
-                user.getUid(), nombre.getText().toString(), apellido.getText().toString(), usuario.getText().toString(), correo.getText().toString());
+                user.getUid(), etNombre.getText().toString(), etApellido.getText().toString(), etUsuario.getText().toString(), correo.getText().toString());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users");
         myRef.child(user.getUid()).setValue(users);

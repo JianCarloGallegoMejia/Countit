@@ -1,13 +1,16 @@
 package com.iejag.countit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import io.realm.Realm;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 public class EditProductActivity extends AppCompatActivity {
 
@@ -26,9 +29,24 @@ public class EditProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         realm = Realm.getDefaultInstance();
+        loadToolbar();
         loadViews();
         id = getIntent().getStringExtra("productId");
         loadProduct(id);
+    }
+
+    private void loadToolbar() {
+        getSupportActionBar().setTitle(R.string.edit_product);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadProduct(String id) {

@@ -22,4 +22,7 @@
     <string name="alert_message">¿Desea eliminar este producto?</string>
     <string name="cancel">Cancelar</string>
     <string name="accept">Aceptar</string>
+    <string name="edit_product">Editar producto</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="search">Buscar</string>
 </resources>
